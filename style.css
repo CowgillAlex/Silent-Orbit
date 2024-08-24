@@ -1,0 +1,10 @@
+body{
+    margin-left:0;
+    margin-top:0;
+    overflow: hidden; /* Hide scrollbars */
+}
+.lil-gui { 
+	--width: 400px;
+	--name-width: 65%;
+    
+}
