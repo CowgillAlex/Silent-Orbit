@@ -57,7 +57,7 @@ function initSky() {
 }
 
 stat.showPanel(0); // 0: fps, 1: ms, 2: mb, 3+: custom
-document.body.appendChild(stat.dom);
+document.body.appendChild(stat.dom); //Hide it for the screenshots :)
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(window.devicePixelRatio);
 renderer.setClearColor(0x576584); // Set background color to light blue
