@@ -9,7 +9,9 @@ Silent Orbit is a 2D platformer game built with Three.js
 
 
 ## Run the Game
-Download the source, and run <code> Server.jar</code> and open <code>localhost:[port number from GUI]/index.html</code>
+Download the source, and run `Server.jar` and open `localhost:[port number from GUI]/index.html`
+
+By default the port is `8080`, so you would go to `localhost:8080/index.html` to load the project
 
 This assumes you have `Java 11` at minimum installed on your computer. 
 
