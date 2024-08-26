@@ -2,9 +2,10 @@ import * as THREE from '../Three/Three.js'; // Adjust path as necessary
 import { generateGridArray, renderGrid } from './grid.js';
 import { handleKeyPress, handleKeyDown, handleKeyUp } from './input.js';
 import * as stats from '../scripts/stats.js'
-import * as GUI from './ui.js';
+//import * as GUI from './ui.js';
 import { Sky} from '../jsm/objects/Sky.js'
 import { Player } from './player.js';
+import { SmoothUtils } from './smoothUtils.js'
 // Initialize Three.js components
 const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 10000);
@@ -14,6 +15,33 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 const parallaxSpeed = 0.005; // Speed of parallax effect
 var stat = new stats.Stats()
 let sky, sun;
+
+
+async function animateCameraPosition(startY, endY, duration) {
+    const clock = new THREE.Clock(); // Initialize clock
+    function updateCameraPosition() {
+        const elapsedTime = clock.getElapsedTime(); // Get elapsed time
+        const progress = elapsedTime / duration; // Calculate progress (0 to 1)
+        
+        // Lerp the camera position from startZ to endZ
+        const currentY = SmoothUtils.easeInOut(startY, endY, progress);
+        camera.position.y = currentY;
+
+        if (progress < 1) {
+            // Continue the animation
+            requestAnimationFrame(updateCameraPosition);
+        } else {
+            // Start the main animation loop once the camera animation is complete
+            animate();
+        }
+
+        // Render the scene
+        renderer.render(scene, camera);
+    }
+
+    // Start the camera animation
+    updateCameraPosition();
+}
 function initSky() {
 
     // Add Sky
@@ -175,6 +203,8 @@ function moveCamera() {
     camera.position.z = GUI.gui.children[2].object.cameraZ
 
 }
+camera.position.set(0, 200, 10);
+await animateCameraPosition(200, -40, 10); // Duration of 3 seconds
 function animate() {
     requestAnimationFrame(animate);
     stat.begin()
@@ -193,7 +223,7 @@ function animate() {
 
     // Render your scene
     //camera.position.set(GUI.gui.children[0].object.cameraX,GUI.gui.children[0].object.cameraY, -10 )
-    moveCamera()
+    //moveCamera()
     moonMesh.position.set((camera.position.x*parallaxSpeed - 69), camera.position.y*parallaxSpeed + 200, -400)
     cityForegroundMesh.position.set(camera.position.x*parallaxSpeed,camera.position.y*parallaxSpeed-24,-50)
     cityBackgroundMesh.position.set(camera.position.x*parallaxSpeed, camera.position.y*parallaxSpeed, -100)
