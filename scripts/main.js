@@ -12,7 +12,7 @@ const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerH
 const renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('myCanvas') });
 renderer.toneMapping = THREE.ACESFilmicToneMapping;
 				renderer.toneMappingExposure = 0.5;
-const parallaxSpeed = 0.005; // Speed of parallax effect
+const parallaxSpeed = 0.0005; // Speed of parallax effect
 var stat = new stats.Stats()
 let sky, sun;
 
