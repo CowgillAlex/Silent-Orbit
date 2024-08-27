@@ -34,7 +34,7 @@ async function animateCameraPosition(startY, endY, duration) {
             // Start the main animation loop once the camera animation is complete
             animate();
         }
-
+        moveCamera()
         // Render the scene
         renderer.render(scene, camera);
     }
@@ -176,7 +176,7 @@ const gridSize = 80; // Number of squares per row and column
 const squareSize = 1.5; // Size of each square (plane)
 //const squareSize = 0.4
 // Create grid using function from grid.js
-const gridArray = generateGridArray(gridSize)
+const gridArray = generateGridArray(80, 46) //IDK why 45 doesnt work, even numbers lol
 renderGrid(scene, gridArray, squareSize, textureLoader);
 
 // Position the camera to view the grid
@@ -197,14 +197,14 @@ function onWindowResize() {
     renderer.setSize(window.innerWidth, window.innerHeight);
 }
 window.addEventListener('resize', onWindowResize, false);
+//Debug Function, replaces camX and Y on html document
 function moveCamera() {
-    camera.position.x = GUI.gui.children[0].object.cameraX
-    camera.position.y = GUI.gui.children[1].object.cameraY
-    camera.position.z = GUI.gui.children[2].object.cameraZ
+    document.getElementById('cameraX').innerHTML = "X:" + camera.position.x
+    document.getElementById('cameraY').innerHTML = "Y:" + Math.floor(camera.position.y)
 
 }
 camera.position.set(0, 200, 10);
-await animateCameraPosition(200, -40, 10); // Duration of 3 seconds
+await animateCameraPosition(200, -15, 3); // Duration of 3 seconds
 function animate() {
     requestAnimationFrame(animate);
     stat.begin()
@@ -223,9 +223,9 @@ function animate() {
 
     // Render your scene
     //camera.position.set(GUI.gui.children[0].object.cameraX,GUI.gui.children[0].object.cameraY, -10 )
-    //moveCamera()
+    moveCamera()
     moonMesh.position.set((camera.position.x*parallaxSpeed - 69), camera.position.y*parallaxSpeed + 200, -400)
-    cityForegroundMesh.position.set(camera.position.x*parallaxSpeed,camera.position.y*parallaxSpeed-24,-50)
+    cityForegroundMesh.position.set(camera.position.x*parallaxSpeed,camera.position.y*parallaxSpeed,-50)
     cityBackgroundMesh.position.set(camera.position.x*parallaxSpeed, camera.position.y*parallaxSpeed, -100)
 
     renderer.render(scene, camera);

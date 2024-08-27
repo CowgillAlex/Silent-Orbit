@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Silent Orbit Pre-Alpha</title>
-        <link href="./style.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
-
-    </head>
-    <body>
-        <canvas id="myCanvas"></canvas>
-        <p style="color:#ffffff; font-family: 'Press Start 2P', cursive; position: absolute; right: 0px; top: 0px; z-index: 1000;background-color: rgba(55, 55, 55, 0.763); padding: 10px; margin-top:0; font-size: 10px"> Silent Orbit 0.1.0-ALPHA </p>
-    <!--<script src="scripts/p5.js"></script>-->
+<head>
+    <title>Silent Orbit Pre-Alpha</title>
+    <link href="./style.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+</head>
+<body>
+    <canvas id="myCanvas"></canvas>
+    <p id="version"
+        style="color:#ffffff; font-family: 'Press Start 2P', cursive; position: absolute; right: 0px; top: 0px; z-index: 1000;background-color: rgba(55, 55, 55, 0.763); padding: 10px; margin-top:0; font-size: 10px">
+        Silent Orbit 0.2.0-ALPHA </p>
+        <p id="cameraX"
+        style="color:#ffffff; font-family: 'Press Start 2P', cursive; position: absolute; right: 0px; top: 30px; z-index: 1000;background-color: rgba(55, 55, 55, 0.763); padding: 10px; margin-top:0; font-size: 10px">
+        </p>
+        <p id="cameraY"
+        style="color:#ffffff; font-family: 'Press Start 2P', cursive; position: absolute; right: 0px; top: 60px; z-index: 1000;background-color: rgba(55, 55, 55, 0.763); padding: 10px; margin-top:0; font-size: 10px">
+        </p>
     <script src="scripts/three.js" type="module"></script>
     <script src="scripts/stats.js" type="module"></script>
+    <script>
+        const version = "0.2.0-ALPHA"
+        const displayVersion = "Silent Orbit " + version
+        document.title = displayVersion
+        document.getElementById('version').innerHTML = displayVersion
+        </script>
     <script src="scripts/main.js" type="module"></script>
-    
-    </body>
+
+</body>
 
 </html>
