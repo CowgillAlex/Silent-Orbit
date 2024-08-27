@@ -15,7 +15,7 @@ renderer.toneMapping = THREE.ACESFilmicToneMapping;
 const parallaxSpeed = 0.0005; // Speed of parallax effect
 var stat = new stats.Stats()
 let sky, sun;
-
+let introduction = true
 
 async function animateCameraPosition(startY, endY, duration) {
     const clock = new THREE.Clock(); // Initialize clock
@@ -24,8 +24,11 @@ async function animateCameraPosition(startY, endY, duration) {
         const progress = elapsedTime / duration; // Calculate progress (0 to 1)
         
         // Lerp the camera position from startZ to endZ
+        
         const currentY = SmoothUtils.easeInOut(startY, endY, progress);
+        
         camera.position.y = currentY;
+        
 
         if (progress < 1) {
             // Continue the animation
@@ -33,6 +36,7 @@ async function animateCameraPosition(startY, endY, duration) {
         } else {
             // Start the main animation loop once the camera animation is complete
             animate();
+            introduction = false
         }
         moveCamera()
         // Render the scene
@@ -203,8 +207,16 @@ function moveCamera() {
     document.getElementById('cameraY').innerHTML = "Y:" + Math.floor(camera.position.y)
 
 }
+function cameraBounds( minX, maxX, minY, maxY, introduction){
+    if (introduction) return
+    if (camera.position.x >= maxX) camera.position.x = maxX
+    if (camera.position.y <= minY) camera.position.y = minY
+    if (camera.position.x <= minX) camera.position.x = minX
+    if (camera.position.y >= maxY) camera.position.y = maxY
+}
 camera.position.set(0, 200, 10);
-await animateCameraPosition(200, -15, 3); // Duration of 3 seconds
+animateCameraPosition(200, -15, 3); // Duration of 3 seconds
+
 function animate() {
     requestAnimationFrame(animate);
     stat.begin()
@@ -223,7 +235,9 @@ function animate() {
 
     // Render your scene
     //camera.position.set(GUI.gui.children[0].object.cameraX,GUI.gui.children[0].object.cameraY, -10 )
+    cameraBounds(-40,40,-20,20,introduction)
     moveCamera()
+    
     moonMesh.position.set((camera.position.x*parallaxSpeed - 69), camera.position.y*parallaxSpeed + 200, -400)
     cityForegroundMesh.position.set(camera.position.x*parallaxSpeed,camera.position.y*parallaxSpeed,-50)
     cityBackgroundMesh.position.set(camera.position.x*parallaxSpeed, camera.position.y*parallaxSpeed, -100)
@@ -231,4 +245,5 @@ function animate() {
     renderer.render(scene, camera);
     stat.end()
 }
+
 animate();
